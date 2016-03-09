@@ -768,6 +768,11 @@ public class Parser {
         return blockNode;
     }
 
+    private void inject(Node node){
+        node.setFileName(filename);
+        node.setLineNumber(line());
+    }
+
     private Node parseConditional() {
         If conditionalToken = (If) expect(If.class);
         ConditionalNode conditional = new ConditionalNode();
@@ -779,12 +784,14 @@ public class Parser {
         IfConditionNode main = new IfConditionNode(conditionalToken.getValue(), conditionalToken.getLineNumber());
         main.setInverse(conditionalToken.isInverseCondition());
         main.setBlock(block());
+        inject(main);
         conditions.add(main);
 
         while (peek() instanceof ElseIf) {
             ElseIf token = (ElseIf) expect(ElseIf.class);
             IfConditionNode elseIf = new IfConditionNode(token.getValue(), token.getLineNumber());
             elseIf.setBlock(block());
+            inject(elseIf);
             conditions.add(elseIf);
         }
 
@@ -793,6 +800,7 @@ public class Parser {
             IfConditionNode elseNode = new IfConditionNode(null, token.getLineNumber());
             elseNode.setDefault(true);
             elseNode.setBlock(block());
+            inject(elseNode);
             conditions.add(elseNode);
         }
 

@@ -93,6 +93,19 @@
             </build>
         </profile>
     </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>code</id>
+            <name>code-releases</name>
+            <url>http://mvn.pn.com/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>code</id>
+            <name>code-snapshots</name>
+            <url>http://mvn.pn.com/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
     
     <build>
         <pluginManagement>
